@@ -14,8 +14,19 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
 
     const navigate = useNavigate()
+    const [ showSubMenu, setShowSubMenu ] = useState(null);
     const [openMenu, SetOpenMenu] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
     const toggle = () => SetOpenMenu(!openMenu);
+
+    const handleMenuItemClick = (index) => {
+        setSelectedItem(index);
+      };
+    
+    const toggleSubMenu = (index) => {
+        setShowSubMenu(showSubMenu === index ? null : index);
+    };
+
     const { user, logout } = useContext(UserContext);
     
     const closeMenuOnSmallScreen = () => {
@@ -127,13 +138,36 @@ const Navbar = () => {
                     </div>
                     <NavbarLink to={"/"}>CYBER</NavbarLink>
                 </div>
-                <div className="navbar-links">
-                    <ul className="list-links">
-                        <li><a className = "link-item" href = "/productos/videojuego/all" >Videojuegos</a><GoTriangleDown/> </li>
+                <nav className="navbar-links">
+                    <ul className="navbar-list-links">
+                        {menuItems.map((menuItem, index) => (
+                            <li key={index}>
+                                <a className={`navbar-list-link-item ${selectedItem === index ? 'selected' : ''}`} href={menuItem.path}>
+                                    {menuItem.name}
+                                </a>
+                                <GoTriangleDown className="gotriangledown" style={{cursor : "pointer"}} 
+                                    onClick={() => {
+                                        toggleSubMenu(index);
+                                        handleMenuItemClick(index);
+                                      }} />
+                                {showSubMenu === index && (
+                                    <ul className="nav-bar-submenu">
+                                        {menuItem.subMenuItems.map((subMenuItem, subIndex) => (
+                                            <li className="nav-bar-submenu-item" key={subIndex}>
+                                                <a href={subMenuItem.path} className="nav-bar-submenu-link-item">
+                                                    {subMenuItem.name}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </li>
+                        ))}
+                        {/* <li><a className = "link-item" href = "/productos/videojuego/all" >Videojuegos</a><GoTriangleDown/> </li>
                         <li><a className = "link-item" href = "/productos/consola/all" >Consolas</a><GoTriangleDown/> </li>
-                        <li><a className = "link-item" href = "/productos/accesorio/all" >Accesorios</a><GoTriangleDown/> </li>
+                        <li><a className = "link-item" href = "/productos/accesorio/all" >Accesorios</a><GoTriangleDown/> </li> */}
                     </ul>
-                </div>
+                </nav>
                 <ul>
                     <li>
                         <a className="pre-navbar-link" href="/">

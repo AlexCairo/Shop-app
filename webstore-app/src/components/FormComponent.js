@@ -39,7 +39,7 @@ const FormComponent = () => {
             login(data);
             navigate("/cuenta/detalle");
         } catch (err) {
-            setShowError(!showError);
+            setShowError(false);
         }
     }
 
