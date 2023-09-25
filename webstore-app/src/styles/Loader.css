@@ -1,8 +1,8 @@
-#contenedor{
-    position: absolute;
-    top: 20%;
-    height: 20rem;
-    width: 100%;
+#contenedor{  
+  /* position: absolute; */
+  /* right: 50%;
+  top: 50%; */
+  padding-top: 10rem;
 }
 .loader,
 .loader:before,

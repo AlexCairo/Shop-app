@@ -69,9 +69,13 @@ header{
 .navbar-list-link-item:hover{
     background-color: #79797931;
 }
-.selected {
+.selected{
     background-color: #79797931;
-  }
+}
+.gotriangledown{
+    height: 1.5rem;
+    border-radius: 10px;
+}
 .nav-bar-submenu{
     position: absolute;
     top: 100%;
@@ -82,7 +86,7 @@ header{
     display: flex;
     justify-content: center;    
     padding: 10px;
-    box-shadow: -10px 0px 10px 0 rgba(50,50,50,0.75);
+    box-shadow: 1px 4px 2px 0 rgba(50,50,50,0.75) inset;
     display: block;
 }
 .nav-bar-submenu-link-item{
@@ -200,12 +204,6 @@ header{
     left: .5rem;
     font-size: calc(var(--font-size)*0.75);
 }
-
-/* @media (min-width : 585px){
-    .navbar{
-        display: contents;
-    }
-} */
 
 @media (min-width : 924px){
     .pre-navbar-logo div{

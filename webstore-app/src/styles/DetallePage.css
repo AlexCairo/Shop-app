@@ -72,9 +72,14 @@
     color: white;
     background: #07043a;
     height: 100%;
+    cursor: pointer;
 }
 .button-aumentar:disabled, .button-disminuir:disabled{
     background: #6e6e70;
+}
+.container-loader-producto{
+    position: absolute;
+    right: 50%;
 }
 .button-agregarCarrito{
     border: none;
@@ -82,10 +87,11 @@
     background: #ff7009;
     color: white;
     border-radius: 25px;
+    cursor: pointer;
 }
 .detalle-producto-resumen{
     padding: .5rem;
-     
+    margin-bottom: 1.5rem; 
 }
 .detalle-producto-title{
     border-top: 2px solid rgba(0,0,0,0.105);
@@ -124,6 +130,7 @@
     }
     .detalle-producto-resumen{
         grid-area: acercaDe;
+        margin-bottom: 2.5rem;
     }
     .detalle-producto-container img{
         min-width: 25rem;
@@ -131,5 +138,8 @@
     }
     .caracteristica span{
         width: 20rem;
+    }
+    .container-loader-producto{
+        top: 20%;
     }
 }

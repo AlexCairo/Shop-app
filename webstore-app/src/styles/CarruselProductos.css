@@ -65,7 +65,7 @@
 
 @media(min-width : 810px){
   .carousel-productos-item{
-    background: rgb(250, 250, 250);
+
     flex: 0 0 25%;
   }
   .carousel-productos-item p{
@@ -97,5 +97,11 @@
   }
   .button{
     display: none;
+  }
+  .icon-add-cart{
+    position: relative;
+    width: 80%;
+    border-radius: 25px;
+    margin-top: .5rem;
   }
 }

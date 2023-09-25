@@ -16,12 +16,16 @@ const Navbar = () => {
     const navigate = useNavigate()
     const [ showSubMenu, setShowSubMenu ] = useState(null);
     const [openMenu, SetOpenMenu] = useState(false);
-    const [selectedItem, setSelectedItem] = useState(null);
+    const [selectedItem, setSelectedItem] = useState(false);
     const toggle = () => SetOpenMenu(!openMenu);
 
     const handleMenuItemClick = (index) => {
-        setSelectedItem(index);
-      };
+        if (selectedItem === index) {
+            setSelectedItem(null);
+        } else {
+            setSelectedItem(index);
+        }
+    };
     
     const toggleSubMenu = (index) => {
         setShowSubMenu(showSubMenu === index ? null : index);
@@ -43,6 +47,7 @@ const Navbar = () => {
         {
             name : "VIDEOJUEGOS",
             path : "/productos/videojuego/all",
+            background : "#ffc9c9",
             subMenuItems : [
                 {
                     icon : <SiPlaystation5/>,
@@ -69,6 +74,7 @@ const Navbar = () => {
         {
             name : "CONSOLAS",
             path : "/productos/consola/all",
+            background : "#d2ffc9",
             subMenuItems : [
                 {
                     icon : <SiPlaystation5/>,
@@ -95,6 +101,7 @@ const Navbar = () => {
         {
             name : "ACCESORIOS",
             path : "/productos/accesorio/all",
+            background : "#ffcffe",
             subMenuItems : [
                 {
                     icon : <SiPlaystation5/>,
@@ -122,8 +129,7 @@ const Navbar = () => {
 
     useEffect(() => {
         window.addEventListener('resize', closeMenuOnSmallScreen);
-    
-        // Limpia el listener cuando el componente se desmonta
+
         return () => {
           window.removeEventListener('resize', closeMenuOnSmallScreen);
         };
@@ -142,16 +148,16 @@ const Navbar = () => {
                     <ul className="navbar-list-links">
                         {menuItems.map((menuItem, index) => (
                             <li key={index}>
-                                <a className={`navbar-list-link-item ${selectedItem === index ? 'selected' : ''}`} href={menuItem.path}>
+                                <a className="navbar-list-link-item" href={menuItem.path}>
                                     {menuItem.name}
                                 </a>
-                                <GoTriangleDown className="gotriangledown" style={{cursor : "pointer"}} 
+                                <GoTriangleDown className={`gotriangledown ${selectedItem === index ? 'selected' : ''}`} style={{cursor : "pointer"}} 
                                     onClick={() => {
                                         toggleSubMenu(index);
                                         handleMenuItemClick(index);
                                       }} />
                                 {showSubMenu === index && (
-                                    <ul className="nav-bar-submenu">
+                                    <ul className={`nav-bar-submenu`} >
                                         {menuItem.subMenuItems.map((subMenuItem, subIndex) => (
                                             <li className="nav-bar-submenu-item" key={subIndex}>
                                                 <a href={subMenuItem.path} className="nav-bar-submenu-link-item">
@@ -163,9 +169,6 @@ const Navbar = () => {
                                 )}
                             </li>
                         ))}
-                        {/* <li><a className = "link-item" href = "/productos/videojuego/all" >Videojuegos</a><GoTriangleDown/> </li>
-                        <li><a className = "link-item" href = "/productos/consola/all" >Consolas</a><GoTriangleDown/> </li>
-                        <li><a className = "link-item" href = "/productos/accesorio/all" >Accesorios</a><GoTriangleDown/> </li> */}
                     </ul>
                 </nav>
                 <ul>

@@ -36,12 +36,12 @@ const DetallePage = () => {
 
     return (
         <section className="detalle-producto">
-            {loader ? <Loader/> : 
+            {loader ? <div className="container-loader-producto"><Loader/></div> : 
             <div className="detalle-producto-container">
                 <img src={`${IMG_URL}/${producto.imagen}`} alt={producto.nombre}></img>
                 <div className="detalle-producto-descripcion">
                     <h2>{producto.nombre}</h2>
-                    <span className="detalle-producto-descripcion-precio">S/{producto.precio}</span>
+                    <span className="detalle-producto-descripcion-precio">S/{producto.precio}.00</span>
                     <div className="producto-caracteristicas">
                         {producto.plataforma && (
                         <div className="caracteristica">

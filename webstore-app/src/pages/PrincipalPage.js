@@ -40,32 +40,25 @@ const PrincipalPage = () => {
   }, []);
 
   return (
-    <>
-      {loading ? (
-        <Loader />
-      ) : (
         <>
           <section className="carrusel-principal">
             <Carousel />
           </section>
-          <section className="categorias">
-            {categorias.map((categoria,index) => (
-              <div key={index}>
-                <div className="categoria-title">
-                    {categoria === "videojuego" ? <h3>Últimos lanzamientos</h3>
-                      : <h3>{categoria}s</h3>
-                    }
+          <section className="categorias">          
+          {loading ? (
+              <Loader />
+            ) : (
+              categorias.map((categoria, index) => (
+                <div key={index}>
+                  <div className="categoria-title">
+                    {categoria === "videojuego" ? <h3>Últimos lanzamientos</h3> : <h3>{categoria}s</h3>}
+                  </div>
+                  <CarruselProductos productosCarrusel={productosCarrusel[categoria]} />
                 </div>
-                <CarruselProductos
-                    productosCarrusel={productosCarrusel[categoria]}
-                />
-              </div>
-            ))}
+              ))
+            )}
           </section>
         </>
       )}
-    </>
-  );
-};
 
 export default PrincipalPage;

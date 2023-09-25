@@ -105,14 +105,13 @@ const ProductosPage = () => {
                 <span className="banner-title">{categoria}s</span>
             </div>
         </section>
-        {loading ? <Loader /> : 
-            <section className="productos-grid">
+        <section className="productos-grid">
                  <div className="productos-rutas-left">
                     <ul className="ul">
                         {menuItems.map((menuItem, index) => (
                             <li key={index}>
-                                <a style={{color : `${window.location.pathname.includes(menuItem.path) && "#ff7009"}`}} href={menuItem.path} >{menuItem.name}</a>
-                                {menuItem.subMenuItems && (
+                                <a style={{color : `${window.location.pathname.includes(menuItem.path.replace("/all", "")) && "#ff7009"}`}} href={menuItem.path} >{menuItem.name}</a>
+                                    {menuItem.subMenuItems && (
                                     <ul className="submenu-rutas-left">
                                         {menuItem.subMenuItems.map((subMenuItem, subIndex) => (
                                             <li key={subIndex}>
@@ -126,22 +125,28 @@ const ProductosPage = () => {
                     </ul>
                 </div>
                 <div className="container-productos-grid">
-                    {listaProductos.length === 0 ? <div className="sin-resultado">Sin resultados</div>
-                        :
-                        listaProductos.map(producto => (
-                            <div key={producto._id} className="producto">
-                                <Link to={`/detalle/${producto._id}`}>
-                                    <img src={`${IMG_URL}${producto.imagen}`} alt={producto.nombre} />
-                                </Link>
-                                <p>
-                                    <span>{producto.nombre}</span> <br/>
-                                    <strong>{`S/${producto.precio}`}</strong>
-                                </p>
-                                <button>Añadir al carrito</button>
-                            </div>
-                        ))}
+                    {loading ? (
+                        <div className="container-loader">
+                            <Loader />
+                        </div>
+                    ) : listaProductos.length === 0 ? (
+                        <div className="sin-resultado">Sin resultados</div>
+                    ) : (
+                        listaProductos.map((producto) => (
+                        <div key={producto._id} className="producto">
+                            <Link to={`/detalle/${producto._id}`}>
+                            <img src={`${IMG_URL}${producto.imagen}`} alt={producto.nombre} />
+                            </Link>
+                            <p>
+                            <span>{producto.nombre}</span> <br />
+                            <strong>{`S/${producto.precio}`}</strong>
+                            </p>
+                            <button>Añadir al carrito</button>
+                        </div>
+                        ))
+                    )}
                 </div>
-            </section>}
+            </section>
             <div id="div"></div>
         </>
     )

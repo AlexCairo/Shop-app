@@ -16,6 +16,11 @@
         background: #07043ade;
     }
 }
+.container-loader{
+    position: absolute;
+    right: 50%;
+    top: 60%;
+}
 .banner-title{
     position: absolute;
     text-transform: uppercase;
@@ -27,20 +32,27 @@
     font-size: 2rem;
 }
 .container-productos-grid{
+    position: relative;
     margin-top: 2rem;
     text-align: center;
     padding: 0 .5rem;
     display: grid;
     row-gap: 2rem;
+    align-items: center;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
 .ul{
     margin-top: 2rem;
     width: 80%;
 }
+.ul a{
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+}
 .ul a:hover{
-    font-weight: bold;
-    transition: cubic-bezier(0.19, 1, 0.22, 1) .3s;
+    transform: scale(1.1);
+    transition: .2s linear;
 }
 .productos-rutas-left{
     display: none;
@@ -96,9 +108,14 @@
     text-transform: uppercase;
     color: rgb(213, 213, 213);
     grid-column: span 4;
-    margin-top: 6rem;
 }
 @media (min-width : 895px){
+    .container-loader{
+        position: absolute;
+        bottom: 50%;
+        right: 50%;
+        top: 0;
+    }
     .banner{
         height: 20rem;
         background-position: center center;
