@@ -75,6 +75,21 @@
     padding-left: 4rem;
     text-align: end;
 }
+.message-producto-añadido{
+    padding: .5rem 1.5rem;
+}
+.message-producto-añadido span{
+    background: #e5efe5;
+    color: #006400;
+    min-width: 100%;
+    padding: .5rem;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+.icon-producto-añadido{
+    font-size: 2rem;
+}
 .producto{
     padding: .5rem 0;
     display: flex;
@@ -110,10 +125,14 @@
     grid-column: span 4;
 }
 @media (min-width : 895px){
+    .message-producto-añadido{
+        width: 90%;
+        margin: 0 auto;
+    }
     .container-loader{
         position: absolute;
         bottom: 50%;
-        right: 50%;
+        right: 60%;
         top: 0;
     }
     .banner{

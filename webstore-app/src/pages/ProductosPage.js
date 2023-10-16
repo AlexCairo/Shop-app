@@ -1,9 +1,11 @@
 import { Link, useParams } from "react-router-dom";
 import "../styles/ProductoPage.css";
 import { obtenerProductos } from "../services/Productos.service";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Loader from "../components/Loader";
 import { IMG_URL } from "../helpers/config";
+import { carritoContext } from "../context/CarritoContext";
+import { AiFillCheckCircle } from "react-icons/ai";
 
 const menuItems = [
         {
@@ -76,9 +78,11 @@ const menuItems = [
 
 const ProductosPage = () => {
 
+    const [ elemAgregado, setElemAgregado ] = useState();
     const [ loading, setLoading ] = useState(true);
     const [listaProductos, setListaProductos] = useState();
     const { categoria, plataforma } = useParams();
+    const { agregar } = useContext(carritoContext);
 
     const Banners = {
         videojuego : "https://www.mundodeportivo.com/alfabeta/hero/2022/01/personajes-populares-videojuegos.webp?width=1200&aspect_ratio=16:9",
@@ -90,6 +94,11 @@ const ProductosPage = () => {
         const res = await obtenerProductos(categoria, plataforma);
         setListaProductos(res.data);
         setLoading(false);
+    }
+
+    const handleAddProducto = (elem) => {
+        agregar(elem);
+        setElemAgregado(elem.nombre);
     }
 
     useEffect(()=>{
@@ -105,6 +114,10 @@ const ProductosPage = () => {
                 <span className="banner-title">{categoria}s</span>
             </div>
         </section>
+        {elemAgregado && 
+            <div className="message-producto-añadido">
+                <span><AiFillCheckCircle className="icon-producto-añadido" /> Has añadido {elemAgregado} a tu bolsa</span>
+            </div>}
         <section className="productos-grid">
                  <div className="productos-rutas-left">
                     <ul className="ul">
@@ -141,7 +154,7 @@ const ProductosPage = () => {
                             <span>{producto.nombre}</span> <br />
                             <strong>{`S/${producto.precio}`}</strong>
                             </p>
-                            <button>Añadir al carrito</button>
+                            <button onClick={()=>handleAddProducto(producto)}>Añadir al carrito</button>
                         </div>
                         ))
                     )}

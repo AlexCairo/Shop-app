@@ -74,6 +74,14 @@
     height: 100%;
     cursor: pointer;
 }
+.button-disminuir{
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.button-aumentar{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
 .button-aumentar:disabled, .button-disminuir:disabled{
     background: #6e6e70;
 }
@@ -86,8 +94,12 @@
     padding: .75rem;
     background: #ff7009;
     color: white;
-    border-radius: 25px;
     cursor: pointer;
+    border-radius: 10px;
+}
+.button-agregarCarrito:hover{
+    opacity: .7;
+    transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
 .detalle-producto-resumen{
     padding: .5rem;
@@ -137,7 +149,7 @@
         max-width: 40rem;
     }
     .caracteristica span{
-        width: 20rem;
+        width: 23rem;
     }
     .container-loader-producto{
         top: 20%;

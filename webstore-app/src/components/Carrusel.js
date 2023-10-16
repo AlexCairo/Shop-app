@@ -18,11 +18,7 @@ const images = [
 
 const Carousel = () => {  
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const handleJumpToImage = (index) => {
-    setCurrentImageIndex(index);
-  };
-
+  
   useEffect(() => {
     
     const handleNext = () => {
@@ -49,15 +45,6 @@ const Carousel = () => {
                   className={`carousel-image-item ${index === currentImageIndex ? 'active' : ''}`}
                   style={{ zIndex: index === currentImageIndex ? 1 : 0 }}
                 />
-            ))}
-          </div>
-          <div className="carousel-dots">
-            {images.map((_, index) => (
-              <span
-                key={index}
-                className={`dot ${index === currentImageIndex ? 'active' : ''}`}
-                onClick={() => handleJumpToImage(index)}
-              ></span>
             ))}
           </div>
         </div>

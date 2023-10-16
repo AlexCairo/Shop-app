@@ -1,14 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import '../styles/CarruselProductos.css'; // Estilos CSS para el carrusel
 import { MdOutlineNavigateNext,MdOutlineNavigateBefore } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { IMG_URL } from "../helpers/config";
 import { Link } from 'react-router-dom';
+import { carritoContext } from "../context/CarritoContext";
 
 const CarruselProductos = ({ productosCarrusel }) => {
+
+    const { agregar } = useContext(carritoContext);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [imagesPerSlide, setImagesPerSlide] = useState(2);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    const handleAddProduct = (producto, cantidad) => {
+      agregar(producto,cantidad);
+    }
 
     const handlePrevClick = () => {
       setCurrentIndex((prevIndex) =>
@@ -34,10 +41,14 @@ const CarruselProductos = ({ productosCarrusel }) => {
         setImagesPerSlide(3);
       } else if (windowWidth >= 810) {
         setImagesPerSlide(4);
+      } else if (windowWidth >= 1400){
+        setImagesPerSlide(6);
       } else {
         setImagesPerSlide(2);
       }
   
+      setCurrentIndex(0);
+
       return () => {
         window.removeEventListener('resize', handleResize);
       };
@@ -58,9 +69,9 @@ const CarruselProductos = ({ productosCarrusel }) => {
                   </Link>
                   <p>
                       <span>{producto.nombre}</span> <br/>
-                      <strong>{`S/${producto.precio}`}</strong>
+                      <strong>{`S/${producto.precio}.00`}</strong>
                   </p>
-                  <AiOutlineShoppingCart className="icon-add-cart"/>
+                  <AiOutlineShoppingCart className="icon-add-cart" onClick={()=>handleAddProduct(producto,1)}/>
                 </div>
               ))}
             </div>

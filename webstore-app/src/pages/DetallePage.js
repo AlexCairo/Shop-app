@@ -1,12 +1,14 @@
-import { useState,useEffect } from "react";
+import { useState,useEffect, useContext } from "react";
 import { detalleProducto } from "../services/Productos.service";
 import "../styles/DetallePage.css";
 import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import { IMG_URL } from "../helpers/config";
+import { carritoContext } from "../context/CarritoContext";
 
 const DetallePage = () => {
 
+    const { agregar } = useContext(carritoContext)
     const { idProducto } = useParams();
     const [ producto, setProducto ] = useState();
     const [ loader,setLoader ] = useState(true);
@@ -29,6 +31,10 @@ const DetallePage = () => {
             setCantidadProducto(cantidadProducto + 1);
         }
     };
+
+    const handleAgregarCarrito = (item, cant) => {
+        agregar(item,cant);
+    }
 
     useEffect(() => {
         obtenerProducto(idProducto)
@@ -94,7 +100,7 @@ const DetallePage = () => {
                                 <span>{cantidadProducto}</span>
                                 <button className="button-aumentar" onClick={aumentarCantidadProducto} disabled={cantidadProducto >= producto.stock}>+</button>
                             </div>
-                            <button className="button-agregarCarrito">Agregar al carrito</button>
+                            <button onClick={()=>handleAgregarCarrito(producto,cantidadProducto)} className="button-agregarCarrito">Agregar al carrito</button>
                     </div>
                 </div>
                 <div className="detalle-producto-resumen">

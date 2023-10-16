@@ -43,6 +43,20 @@ header{
     color: var(--secondary-color);
     text-decoration: none;
     font-size: calc(var(--font-size)*0.35);
+    position: relative;
+}
+.pre-navbar-link span{
+    display: grid;
+    top: 0;
+    right: 0;
+    place-content: center;
+    background: #ff7009;
+    position: absolute;
+    height: 1.5rem;
+    width: 1.5rem;
+    color: white;
+    border-radius: 50%;
+    font-size: calc(var(--font-size)*0.45)
 }
 .pre-navbar-icon{
     font-size: var(--font-size);
@@ -96,7 +110,7 @@ header{
 }
 .nav-bar-submenu-link-item:hover{
     border-bottom: 2px solid #ff7009;
-    transition: var(--animation-duration) cubic-bezier(0.19, 1, 0.22, 1);;
+    transition: var(--animation-duration) cubic-bezier(0.19, 1, 0.22, 1);
 }
 .div{
     z-index: 99;

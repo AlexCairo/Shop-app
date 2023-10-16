@@ -10,10 +10,13 @@ import { NavbarLink } from "../components/LinkandNavLink";
 import { GoTriangleDown } from "react-icons/go";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import { carritoContext } from "../context/CarritoContext";
 
 const Navbar = () => {
 
     const navigate = useNavigate()
+    const { lista } = useContext(carritoContext);
+    const { user, logout } = useContext(UserContext);
     const [ showSubMenu, setShowSubMenu ] = useState(null);
     const [openMenu, SetOpenMenu] = useState(false);
     const [selectedItem, setSelectedItem] = useState(false);
@@ -30,8 +33,6 @@ const Navbar = () => {
     const toggleSubMenu = (index) => {
         setShowSubMenu(showSubMenu === index ? null : index);
     };
-
-    const { user, logout } = useContext(UserContext);
     
     const closeMenuOnSmallScreen = () => {
         if (window.innerWidth <= 925) {
@@ -185,9 +186,10 @@ const Navbar = () => {
                         </a>
                     </li>
                     <li>
-                        <a className="pre-navbar-link" href="/">
+                        <a className="pre-navbar-link" href="/mi-bolsa">
                             <BiShoppingBag className = "pre-navbar-icon" /> <br/>
                             <strong>Mi Bolsa</strong>
+                            <span>{lista.length}</span>
                         </a>
                     </li>
                 </ul>
