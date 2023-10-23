@@ -120,6 +120,9 @@ const ProductosPage = () => {
             </div>}
         <section className="productos-grid">
                  <div className="productos-rutas-left">
+                    <div className="filter-prize">
+                        <input type="range" id="input-range" min={0} max={5000} step={100}/>
+                    </div>
                     <ul className="ul">
                         {menuItems.map((menuItem, index) => (
                             <li key={index}>

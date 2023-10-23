@@ -1,17 +1,23 @@
 import { useContext, useEffect, useState } from 'react';
-import '../styles/CarruselProductos.css'; // Estilos CSS para el carrusel
+import '../styles/CarruselProductos.css';
 import { MdOutlineNavigateNext,MdOutlineNavigateBefore } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { IMG_URL } from "../helpers/config";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { carritoContext } from "../context/CarritoContext";
+import { BsSearch } from "react-icons/bs";
 
 const CarruselProductos = ({ productosCarrusel }) => {
 
+    const navigate = useNavigate();
     const { agregar } = useContext(carritoContext);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [imagesPerSlide, setImagesPerSlide] = useState(2);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    const irDetalle = (id) => {
+      navigate(`/detalle/${id}`);
+    }
 
     const handleAddProduct = (producto, cantidad) => {
       agregar(producto,cantidad);
@@ -42,7 +48,7 @@ const CarruselProductos = ({ productosCarrusel }) => {
       } else if (windowWidth >= 810) {
         setImagesPerSlide(4);
       } else if (windowWidth >= 1400){
-        setImagesPerSlide(6);
+        setImagesPerSlide(5);
       } else {
         setImagesPerSlide(2);
       }
@@ -64,9 +70,14 @@ const CarruselProductos = ({ productosCarrusel }) => {
             >
               {productosCarrusel.map((producto) => (
                 <div key={producto._id} className="carousel-productos-item">
-                  <Link to={`/detalle/${producto._id}`}>
-                    <img src={`${IMG_URL}${producto.imagen}`} alt={producto.nombre} />
-                  </Link>
+                    <div className='container-img'>
+                      <img src={`${IMG_URL}${producto.imagen}`} alt={producto.nombre} />
+                      <button onClick={()=>handleAddProduct(producto,1)} className='overlay'>Añadir al carrito</button>
+                      <div className='box-detail'>                        
+                        <BsSearch onClick={()=>irDetalle(producto._id)} className='overlay-detail' />
+                        <span className='action-overlay'>Ver detalle</span>
+                      </div>
+                    </div>
                   <p>
                       <span>{producto.nombre}</span> <br/>
                       <strong>{`S/${producto.precio}.00`}</strong>

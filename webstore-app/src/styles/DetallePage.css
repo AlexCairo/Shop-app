@@ -8,16 +8,14 @@
     "img"
     "descipcion";
 }
-
 .detalle-producto-container img{
-    width: 100%;
-    margin: 0 auto;
-    height: auto;
     grid-area: img;
     max-width: 60%;
+    height: auto;
+    margin: 0 auto;
 }
 .detalle-producto-descripcion{
-    /* text-align: center; */
+    border-bottom-left-radius: 50px;
     padding: .5rem;
 }
 .detalle-producto-descripcion h2{
@@ -138,7 +136,8 @@
         font-size: 1rem;
     }
     .detalle-producto-descripcion{
-        width: 80%;
+        width: 85%;
+        padding: 1rem;
     }
     .detalle-producto-resumen{
         grid-area: acercaDe;
