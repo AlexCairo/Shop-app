@@ -80,6 +80,7 @@ const ProductosPage = () => {
 
     const [ elemAgregado, setElemAgregado ] = useState();
     const [ loading, setLoading ] = useState(true);
+    const [ filterType, setFilterType ] = useState('Fecha')
     const [listaProductos, setListaProductos] = useState();
     const { categoria, plataforma } = useParams();
     const { agregar } = useContext(carritoContext);
@@ -96,8 +97,8 @@ const ProductosPage = () => {
         setLoading(false);
     }
 
-    const handleAddProducto = (elem) => {
-        agregar(elem);
+    const handleAddProducto = (elem,cant) => {
+        agregar(elem,cant);
         setElemAgregado(elem.nombre);
     }
 
@@ -121,7 +122,13 @@ const ProductosPage = () => {
         <section className="productos-grid">
                  <div className="productos-rutas-left">
                     <div className="filter-prize">
-                        <input type="range" id="input-range" min={0} max={5000} step={100}/>
+                       <label htmlFor="selectFilter">Ordenar por :</label>
+                        <select id="selectFilter" onChange={(e)=> setFilterType(e.target.value)}>
+                            <option value="Fecha">Fecha</option>
+                            <option value="Precio">Precio</option> 
+                            <option value="Nombre A-Z">Nombre A-Z</option>
+                            <option value="Nombre Z-A">Nombre Z-A</option>    
+                        </select>
                     </div>
                     <ul className="ul">
                         {menuItems.map((menuItem, index) => (
@@ -148,7 +155,20 @@ const ProductosPage = () => {
                     ) : listaProductos.length === 0 ? (
                         <div className="sin-resultado">Sin resultados</div>
                     ) : (
-                        listaProductos.map((producto) => (
+                        listaProductos
+                            .slice()
+                            .sort((a, b) => {
+                                if (filterType === 'Precio') {
+                                return a.precio - b.precio;
+                                } else if (filterType === 'Nombre A-Z') {
+                                return a.nombre.localeCompare(b.nombre);
+                                } else if (filterType === 'Nombre Z-A') {
+                                return b.nombre.localeCompare(a.nombre);
+                                } else {
+                                return new Date(a.fecha) - new Date(b.fecha);
+                                }
+                            })                   
+                        .map((producto) => (
                         <div key={producto._id} className="producto">
                             <Link to={`/detalle/${producto._id}`}>
                             <img src={`${IMG_URL}${producto.imagen}`} alt={producto.nombre} />
@@ -157,7 +177,7 @@ const ProductosPage = () => {
                             <span>{producto.nombre}</span> <br />
                             <strong>{`S/${producto.precio}`}</strong>
                             </p>
-                            <button onClick={()=>handleAddProducto(producto)}>Añadir al carrito</button>
+                            <button onClick={()=>handleAddProducto(producto,1)}>Añadir al carrito</button>
                         </div>
                         ))
                     )}

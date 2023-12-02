@@ -1,6 +1,15 @@
-/* .container-form{
-    background: blue;
-} */
+@keyframes wave {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100%{
+        background-position: 0 0;
+    }
+}
+
 .container-title{
     background: rgb(241, 241, 241);
     padding: 4rem 0;
@@ -32,6 +41,14 @@
 }
 .required-input{
     color: red;
+}
+.animation-btn{
+    background: linear-gradient(45deg, #ff5733, #8f68f0, #33ff57, #ff5733, #8f68f0);
+    background-size: 400% 400%;
+    border: none;
+    color: white;
+    cursor: pointer;
+    animation: wave 2s linear infinite;
 }
 .form-error-message{
    gap: .5rem;

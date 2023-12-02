@@ -23,7 +23,8 @@ const FormComponent = () => {
     const [ credencialesLogin, setCredencialesLogin ] = useState(initValuesLogin);
     const { loginRegister } = useParams();
     const { login } = useContext(UserContext);
-    const [ showError, setShowError ] = useState(true);
+    const [ showError, setShowError ] = useState(false);
+    const [ animation, setAnimation ] = useState(false)
 
     const handleChangeLogin = (e) => {
         const { name, value } = e.target;
@@ -33,13 +34,16 @@ const FormComponent = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        setAnimation(true);
         try {
             const result = await loginUser(credencialesLogin);
             const data = result.data;
             login(data);
+            setAnimation(false);
             navigate("/cuenta/detalle");
         } catch (err) {
-            setShowError(false);
+            setShowError(true);
+            setAnimation(false);
         }
     }
 
@@ -47,7 +51,6 @@ const FormComponent = () => {
         const { name, value } = e.target;
         const nDatos = { ...credencialesRegister, [name]:value };
         setCredencialesRegister(nDatos);
-        console.log(credencialesRegister);
     }
 
     const handleRegister = async (e) => {
@@ -76,11 +79,11 @@ const FormComponent = () => {
                                 <p>Contraseña<span className="required-input"> *</span></p>
                                 <input required={true} onChange={handleChangeLogin} name="password" type="password" />
                             </div>
-                            <span style={{display : showError && "none"}} className="form-error-message">
+                            <span style={{display: !showError && "none"}} className="form-error-message">
                                 <BiError /> Error al iniciar sesión. Intente nuevamente.
                             </span>
                             <div className="form-buttons">
-                                <button onClick={handleLogin} type="submit">Iniciar Sesión</button>
+                                <button className={`${animation ? 'animation-btn' : ''}`} onClick={handleLogin} type="submit">Iniciar Sesión</button>
                                 <button><a href="/cuenta/register">Crear Cuenta</a></button>
                             </div>
                             <span className="required-input">* Campos obligatorios</span>
@@ -101,7 +104,7 @@ const FormComponent = () => {
                                 <p>Correo electrónico<span className="required-input"> *</span></p>
                                 <input required = {true} onChange={handleChangeRegister} name="email" type="email"/>
                             </div>
-                            <span style={{display : showError && "none"}} className="form-error-message">
+                            <span style={{display : !showError && "none"}} className="form-error-message">
                                 <BiError /> Este correo ya se encuentra en uso. Ingrese uno diferente.
                             </span>
                             <div className="form-input">

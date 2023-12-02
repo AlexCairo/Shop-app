@@ -1,11 +1,13 @@
-import { MdKeyboardArrowDown, MdModeEditOutline } from "react-icons/md"
+import { MdKeyboardArrowDown } from "react-icons/md"
 import { useNavigate } from "react-router-dom"
 import { AiOutlineClose } from "react-icons/ai"
 import "../styles/MiBolsa.css"
+import { UserContext } from "../context/UserContext";
 import { useContext, useEffect, useState } from "react"
 import { carritoContext } from "../context/CarritoContext";
 import { PiHandbagDuotone } from "react-icons/pi"
 import { IMG_URL } from "../helpers/config";
+import { guardarPedido } from "../services/Pedido.service";
 
 const ciudades = [
     {
@@ -113,10 +115,11 @@ const ciudades = [
 
 const MicarritoPage = () => {
 
+    const { userId } = useContext(UserContext);
+    const { lista, quitar } = useContext(carritoContext);
     const [ total, setTotal ] = useState(0);
     const [ subTotal, setSubTotal ] = useState(0);
     const [ precioEnvio, setPrecioEnvio ] = useState(0);
-    const { lista, quitar } = useContext(carritoContext);
     const [ openBoxEnvios, setOpenBoxEnvios ] = useState(true);
     const [ isChecked, setIsChecked ] = useState(false);
     const [ selectedCiudad, setSelectedCiudad ] = useState('');
@@ -131,6 +134,22 @@ const MicarritoPage = () => {
 
     const handleBack = () => {
         navigate('/');
+    }
+
+    const handlePayment = async() => {
+        const venta = {
+            clienteId: userId,
+            total,
+            detalle: lista.map(item => {
+                return{
+                    nombreProducto: item.nombre,
+                    precioProducto: item.precio,
+                    cantidad: item.cantidad
+                }
+            })
+        }
+        const response = await guardarPedido(venta);
+        window.location.href = response.data.links[1].href;
     }
 
     const handleChange = (e) => {
@@ -176,7 +195,7 @@ const MicarritoPage = () => {
                                 <span><strong>Cantidad : </strong>{elem.cantidad}</span>
                             </p>
                             <div className="carrito-productos-item-group-button">
-                                <button className="button-edit"><MdModeEditOutline/></button>
+                                {/* <button className="button-edit"><MdModeEditOutline/></button> */}
                                 <button onClick={() => handleRemove(elem._id)} className="button-remove"><AiOutlineClose/></button>
                             </div>
                         </div>
@@ -232,7 +251,7 @@ const MicarritoPage = () => {
                                 </table>
                             </div>
                         </div>
-                        <button className="button-realizarPedido">Realizar pedido</button>
+                        <button onClick={handlePayment} disabled={!userId ? true : false} className={`button-realizarPedido ${!userId ? "button-disabled" : ""}`}>{userId ? "Realizar pedido" : "Inicia sesión para comprar"}</button>
                     </div></>}
             </section>
         </>

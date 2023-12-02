@@ -8,21 +8,17 @@ function CarritoProvider({children}){
   const [lista, setLista] = useState([]);
 
   function agregar(producto, cantidad) {
-    const nProducto = {  ...producto, cantidad};
-    console.log(nProducto);
-    const productoRepetido = lista.some(item => item.nombre === nProducto.nombre);
-    if(productoRepetido) {
-      const nLista = lista.map(item => {
-        if (item.nombre === nProducto.nombre) {
-          return { ...item, cantidad : item.cantidad + cantidad };
-        }
-      })
+    const productoIndex = lista.findIndex(item => item.nombre === producto.nombre);
+  
+    if (productoIndex !== -1) {
+      const nLista = lista.slice();
+      nLista[productoIndex].cantidad += cantidad;
       setLista(nLista);
     } else {
-      const nLista = [...lista, nProducto ];
-      setLista(nLista);
+      const nProducto = { ...producto, cantidad };
+      setLista([...lista, nProducto]);
     }
-  }
+  }  
 
   function quitar(id) {
     const nLista = lista.filter((elem) => elem._id !== id);

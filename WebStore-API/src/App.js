@@ -2,10 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
-
-require('dotenv').config({ path: 'variables.env'});
-const host = process.env.HOST || '0.0.0.0';
-const port = process.env.PORT || '3002';
+require('dotenv').config();
 
 //Conexión con la base de datos
 
@@ -33,4 +30,6 @@ app.use(auth);
 
 app.use('/api/categorias',categoriaRutas);
 
-app.listen(port, host, () => console.log("Servidor corriendo"));
+app.listen(3002, () => {
+    console.log('Server on port 3002');
+})

@@ -82,7 +82,10 @@ const CarruselProductos = ({ productosCarrusel }) => {
                       <span>{producto.nombre}</span> <br/>
                       <strong>{`S/${producto.precio}.00`}</strong>
                   </p>
-                  <AiOutlineShoppingCart className="icon-add-cart" onClick={()=>handleAddProduct(producto,1)}/>
+                  <div className='icon-add-cart'>
+                    <AiOutlineShoppingCart onClick={()=>handleAddProduct(producto,1)}/>
+                    <a href= {`/detalle/${producto._id}`}><BsSearch /></a>
+                  </div> 
                 </div>
               ))}
             </div>

@@ -20,10 +20,21 @@ function UserProvider({children}){
         setEmail(decodedToken.email);
         setToken(token);
         localStorage.token = token;
+
+        const tokenExpirationTime = new Date(decodedToken.exp * 1000).getTime();
+        localStorage.setItem('tokenExpirationTime', tokenExpirationTime);
     }
     function logout(){
         setUser(null);
         localStorage.removeItem("token");
+        localStorage.removeItem('tokenExpirationTime');
+    }
+    function isTokenExpired() {
+        const tokenExpirationTime = localStorage.getItem('tokenExpirationTime');
+        if (tokenExpirationTime) {
+          return new Date().getTime() >= tokenExpirationTime;
+        }
+        return true;
     }
     useEffect(()=>{
         if(token){
@@ -33,6 +44,10 @@ function UserProvider({children}){
                 setUser(decodedToken.user);
                 setAccess(decodedToken.access);
                 setEmail(decodedToken.email);
+                if (isTokenExpired()) {
+                    logout();
+                    window.location.href = '/cuenta/login';
+                  }
             } catch (error) {
                 console.log("Token inválido");
             }
