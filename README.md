@@ -2,11 +2,6 @@
 
 **Descripción:** Este proyecto es una página de e-commerce simulada para una tienda de videojuegos. Fue creado para demostrar habilidades en desarrollo web y tecnologías Full Stack.
 
-## Tabla de Contenidos 📜
-1. [Descripción](#descripción)
-2. [Tecnologías Utilizadas](#tecnologías-utilizadas)
-3. [Características](#características)
-
 ## Descripción 📝
 Esta tienda en línea permite a los usuarios explorar una selección de videojuegos, aplicar filtros para encontrar productos específicos, agregar juegos al carrito y realizar compras a través de PayPal. Incluye un sistema de autenticación de usuario que permite al usuario ver su historial de compras y gestionar su cuenta.
 
